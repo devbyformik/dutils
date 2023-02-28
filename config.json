@@ -2,7 +2,7 @@
 	"token":"PUT YOUR TOKEN IN BETWEEN THESE QUOTATION MARKS",
 	"amount" : 50,
 	"message_path" : "./msg.txt",
-	"prefix" : ".",
+	"prefix" : "d.",
 	"log_messages" : false,
 	"log_channels" : [],
 	"announce" : false,
