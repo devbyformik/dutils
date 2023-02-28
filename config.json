@@ -1,0 +1,14 @@
+{
+	"token":"PUT YOUR TOKEN IN BETWEEN THESE QUOTATION MARKS",
+	"amount" : 50,
+	"message_path" : "./msg.txt",
+	"prefix" : "dutils.",
+	"log_messages" : false,
+	"log_channels" : [],
+	"announce" : false,
+	"clear" : true,
+	"rpc" : {
+		"name" : "Dutils Self Bot (developed by formik#0001)",
+		"url" : "https://www.github.com/devbyformik/dutils"
+	}
+}
