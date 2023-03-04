@@ -1,5 +1,7 @@
 dutils - developed by formik#0001
 
+*FOR EDUCATIONAL PURPOSES ONLY
+
 How to setup dutils
 
 
