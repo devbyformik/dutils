@@ -1040,11 +1040,11 @@ class rpc:
 	url = config["rpc"]["url"]
 
 
-msg = open(msg_path, 'r').read()
+
 
 client = discord.Client()
 
-dutils_version = "v7.04"
+dutils_version = "v7.13"
 
 adin_ross = 760305693462626314
 
@@ -1060,10 +1060,18 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-	global log_messages, log_channels, announce, clear, prefix, blackcheat, used, blackcheat_config, blackcheat_lines, blackcheat_words
+	global log_messages, log_channels, announce, clear, prefix, blackcheat, used, blackcheat_config, blackcheat_lines, blackcheat_words, wall
 
 	# blackcheat (start)
 	if blackcheat:
+		if f"{prefix}blackcheat.false" in message.content.lower() and "available commands:" not in message.content.lower():
+			if clear:
+				await message.delete()
+			blackcheat = False		
+			if announce:
+				print(f"\nBlackcheat has been disabled for this session.\n")
+				await message.channel.send(f"```Blackcheat has been disabled for this session.```")
+		
 		if blackcheat == False:
 			return
 		if message.author.id != bleed_id: # Check if the message is from bleed and in the current server
@@ -1124,9 +1132,10 @@ async def on_message(message):
 	elif f"{prefix}spam" in message.content.lower() and "available commands:" not in message.content.lower():
 		if clear:
 			await message.delete()
+		spam_msg = open(msg_path, 'r').read()
 		for i in range(amount):
 			try:
-				await message.channel.send(msg)
+				await message.channel.send(spam_msg)
 			except:
 				exit()
 		return
@@ -1142,7 +1151,7 @@ async def on_message(message):
 			await message.delete()
 		msg = f"""```
 					Available Commands:
-					``` ```
+					``````
 					{prefix}help -> Prints this menu
 
 					{prefix}wall -> Spams walls to the text channel
@@ -1173,6 +1182,10 @@ async def on_message(message):
 
 					{prefix}console.cls -> Clear the console
 
+					{prefix}blackcheat.true -> Enable blackcheat (Blacktea Cheat)
+
+					{prefix}blackcheat.false -> Disable blackcheat (Blacktea Cheat)
+
 					{prefix}credit -> Display credit
 					
 					{prefix}verion -> Display version
@@ -1180,10 +1193,6 @@ async def on_message(message):
 					{prefix}info -> Display all information about dutils
 					
 					{prefix}patch -> Patch notes
-
-					{prefix}blackcheat.true -> Enable blackcheat (Blacktea Cheat)
-
-					{prefix}blackcheat.false -> Disable blackcheat (Blacktea Cheat)
 					```"""
 		print(msg)
 		await message.channel.send(msg)
@@ -1203,34 +1212,19 @@ async def on_message(message):
 			await message.delete()
 		msg = f"""```
 					dutils Patch Notes:
-					``` ```
+					``````
 					Current Version: {dutils_version}
 					Developer: formik#0001
 
 					- bug fixes
-
-					- new config options: "announce" , "clear" , "log_messages" , "log_channels" , "prefix"
-						- announce: announce program events in text channel
-						- clear: clear command calls
-						- log_messages: log messages from the specified channels
-						- log_channels: channels to log messages from
-						- prefix
-
-					- new commands: "announce.false" , "announce.true" , "clear.true", "clear.false", "log.add" , "log.remove" , "console.cls"
-						- announce.false: disable announcements for the current session
-						- announce.true: enable announcements for the current session
-						- clear.false: disable clear option
-						- clear.true: enable clear option
-						- log.add: add current channel to log target
-						- log.remove: remove current channel from log target
-						- prefix.set: set prefix
-						- console.cls: clear the console
 					
 					- new experimental feature: Custom Streaming RPC
 
 					- integrated blackcheat (Blacktea Cheat) by formik
 						- blackcheat.true
 						- blackcheat.false
+
+					- fixed spam command
 					```"""
 		print(msg)
 		await message.channel.send(msg)
